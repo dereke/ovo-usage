@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <title>OVO Energy Usage Downloader</title>
+    <meta type="og:description" content="Download your usage from OVO as a CSV">
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <header>
+      <h1>OVO Energy Usage Downloader</h1>
+      <span>Download your energy usage as a CSV file</span>
+    </header>
+
+    <section>
+      <span>Security Notice: Usually you should not enter your account details into random websites as this is a security risk.</span>
+      <span>This website does not log your account details so it IS safe. You can also checkout the <a href="https://github.com/dereke/ovo-usage" target="_blank">source code here</a> and if you are technical enough run it yourself.</span>
+
+      <form action="/download" method="post">
+        <label>Email or OVO ID <input type="text" name="ovo_id" /></label>
+        <label>Password <input type="password" name="ovo_password" /></label>
+        <span>You are about to download your last years energy usage. This will take some time, please be patient.</span>
+        <input type="submit" />
+      </form>
+    </section>
+  </body>
+</html>
