@@ -1,7 +1,8 @@
+require 'active_support/all'
 require 'csv'
 require 'httpi'
 require 'json'
-require 'active_support/all'
+require 'uuid'
 
 class Downloader
   def initialize(ovo_id, ovo_password)
@@ -24,22 +25,47 @@ class Downloader
     :authenticated
   end
 
-  def download
-    day_request = HTTPI::Request.new
-    day_request.set_cookies @auth_response.cookies
+  @@cache = {}
+  @@pending = {}
 
-    yield(%w[start end consumption].to_csv)
-
-    datetime_sequence(1.year.ago, DateTime.now, 1.day).each do |date|
-      day_request.url = day_request_url(date)
-      puts day_request.url
-      day_response = HTTPI::get(day_request)
-      day_json = JSON.parse(day_response.body)
-
-      day_json['electricity']['data'].each do |entry|
-        yield(entry_csv(entry))
-      end if day_json['electricity']
+  def self.cached(uuid)
+    if @@cache[uuid]
+      @@cache[uuid]
+    elsif @@pending[uuid]
+      302
+    else
+      400
     end
+  end
+
+  def download
+    uuid = UUID.new.generate(:compact)
+    @@pending[uuid] = true
+
+    Thread.new do
+      @@cache[uuid] = CSV.generate do |csv|
+
+        day_request = HTTPI::Request.new
+        day_request.set_cookies @auth_response.cookies
+
+        csv << %w[start end consumption]
+
+        datetime_sequence(1.year.ago, DateTime.now, 1.day).each do |date|
+          day_request.url = day_request_url(date)
+          puts day_request.url
+          day_response = HTTPI::get(day_request)
+          day_json = JSON.parse(day_response.body)
+
+          if day_json['electricity']
+            day_json['electricity']['data'].each do |entry|
+              csv << entry_csv(entry)
+            end
+          end
+        end
+      end
+      @@pending.delete(uuid)
+    end
+    uuid
   end
 
   private
@@ -49,7 +75,7 @@ class Downloader
       DateTime.parse(entry['interval']['start']).strftime('%Y-%m-%dT%H:%M'),
       DateTime.parse(entry['interval']['end']).strftime('%Y-%m-%dT%H:%M'),
       entry['consumption']
-    ].to_csv
+    ]
   end
 
   def datetime_sequence(start, stop, step)

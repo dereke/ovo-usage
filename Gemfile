@@ -6,3 +6,4 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem 'activesupport'
 gem 'httpi'
 gem 'sinatra'
+gem 'uuid'

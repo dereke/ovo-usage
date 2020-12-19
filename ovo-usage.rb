@@ -5,20 +5,27 @@ get '/' do
   erb :index
 end
 
-post '/download' do
+post '/request-download' do
   downloader = Downloader.new(params['ovo_id'], params['ovo_password'])
   redirect to('/?e=unauthenticated')  if downloader.authenticate == :unauthenticated
 
-  content_type 'application/csv'
-  headers({
-    'Content-Disposition' => 'attachment; filename=ovo-electricity-usage.csv'
-  })
+  download_id = downloader.download
 
-  stream do |out|
-    downloader.download do |line|
-      out << line
-      out << "\0" 
-    end
-    out.close
+  redirect to("/download/#{download_id}")
+end
+
+get '/download/:id' do |id|
+  results = Downloader.cached(id)
+  if results == 302
+    # redirect request.url
+    erb :download_pending
+  elsif results == 404
+    status 404
+  else
+    content_type 'application/csv'
+    headers({
+      'Content-Disposition' => 'attachment; filename=ovo-electricity-usage.csv'
+    })
+    results
   end
 end
