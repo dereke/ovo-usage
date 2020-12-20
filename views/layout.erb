@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <title>OVO Energy Usage Downloader</title>
+    <meta type="og:description" content="Download your usage from OVO as a CSV">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/tailwind.css" rel="stylesheet">
+  </head>
+  <body>
+    <div>
+      <nav class="bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <div class="flex items-center">
+                <div class="ml-10 flex items-baseline space-x-4">
+                  <a href="https://ovo-usage.agilecomparison.com" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">Download OVO Energy Usage</a>
+                  <a href="https://agilecomparison.com" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Octopus Agile Calculator</a>
+                </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <header class="bg-white shadow">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+          <h1 class="text-3xl font-bold leading-tight text-gray-900">
+            OVO Energy Usage Downloader
+          </h1>
+        </div>
+      </header>
+      <main>
+        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+          <%=yield %>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,26 +1,33 @@
-<!DOCTYPE html>
-<html lang="en-GB">
-  <head>
-    <title>OVO Energy Usage Downloader</title>
-    <meta type="og:description" content="Download your usage from OVO as a CSV">
-    <meta charset="utf-8">
-  </head>
-  <body>
-    <header>
-      <h1>OVO Energy Usage Downloader</h1>
-      <span>Download your energy usage as a CSV file</span>
-    </header>
 
-    <section>
-      <span>Security Notice: Usually you should not enter your account details into random websites as this is a security risk.</span>
-      <span>This website does not log your account details so it IS safe. You can also checkout the <a href="https://github.com/dereke/ovo-usage" target="_blank">source code here</a> and if you are technical enough run it yourself.</span>
+<div class="mt-5 md:mt-0">
+  <div class="px-4 py-3 bg-red-50 sm:px-6">
+    <div><span class="font-black">Security Notice:</span> Usually you should not enter your account details into random websites as this is a security risk.</div>
 
-      <form action="/request-download" method="post">
-        <label>Email or OVO ID <input type="text" name="ovo_id" /></label>
-        <label>Password <input type="password" name="ovo_password" /></label>
-        <span>You are about to download your last years energy usage. This will take some time, please be patient.</span>
-        <input type="submit" />
-      </form>
-    </section>
-  </body>
-</html>
+    <div>This website does not log your account details so <span class="italic font-medium">it is safe</span>. You can also <a href="https://github.com/dereke/ovo-usage" target="_blank" class="underline font-medium">checkout the source code here</a> and if you are technical enough run it yourself.</div>
+  </div>
+
+  <form action="/request-download" method="post">
+    <div class="shadow overflow-hidden sm:rounded-md">
+      <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+        <div>
+          <label for="ovo_id" class="block text-sm font-medium text-gray-700">Email or OVO ID</label>
+          <div class="mt-1 flex rounded-md shadow-sm">
+            <input type="text" id="ovo_id" name="ovo_id" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+          </div>
+        </div>
+
+        <div>
+          <label for="ovo_password" class="block text-sm font-medium text-gray-700">Password</label>
+          <div class="mt-1 flex rounded-md shadow-sm">
+            <input type="password" id="ovo_password" name="ovo_password" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+          </div>
+        </div>
+      </div>
+      <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+        <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          Download
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
