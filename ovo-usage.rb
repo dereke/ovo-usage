@@ -1,4 +1,5 @@
 require 'sinatra'
+require "sinatra/content_for"
 require './lib/downloader'
 
 set :public_folder, 'public'
@@ -17,7 +18,6 @@ post '/request-download' do
 end
 
 get '/download/:id' do |id|
-  return erb :download_pending
   results = Downloader.cached(id)
   if results == 302
     # redirect request.url
