@@ -5,12 +5,13 @@ require './lib/downloader'
 set :public_folder, 'public'
 
 get '/' do
+  @login_error = params['e']
   erb :index, layout: true
 end
 
 post '/request-download' do
   downloader = Downloader.new(params['ovo_id'], params['ovo_password'])
-  redirect to('/?e=unauthenticated')  if downloader.authenticate == :unauthenticated
+  redirect to('/?e=unauthenticated') if downloader.authenticate == :unauthenticated
 
   download_id = downloader.download
 

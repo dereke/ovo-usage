@@ -8,6 +8,11 @@
 
   <form action="/request-download" method="post">
     <div class="shadow overflow-hidden sm:rounded-md">
+      <% if @login_error %>
+        <div class="px-4 py-3 bg-red-200 sm:px-6">
+          <div>Could not login with the ID and password provided</div>
+        </div>
+      <% end %>
       <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
         <div>
           <label for="ovo_id" class="block text-sm font-medium text-gray-700">Email or OVO ID</label>
